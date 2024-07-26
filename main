@@ -193,7 +193,7 @@ OOMPolicy=continue
 127.0.1.1       DESKTOP-9LI3O79.        DESKTOP-9LI3O79
 127.0.0.2       jonzey.com
 </code></pre>
-</details><ol start="14" style="padding-left: 2em;">
+</details><h1 id="tip1" data-id=""></h1><ol start="14" style="padding-left: 2em;">
 <li><span>CampUAS die Zertifikate herunterladen und bearbeiten</span></li>
 <li><span>/home/x509</span></li>
 <li><span>make_CA.sh</span></li>
@@ -331,9 +331,60 @@ emailAddress_default = medi.edi@gmx.de
 <li><span>cd /mods-available</span></li>
 <li><span>vi ssl.conf</span></li>
 </ol><blockquote>
-<p><strong><span>Hinweis</span></strong><br>
+<p><strong><span>Hinweis:</span></strong><br>
 <span>SSLSessionCache auskommentieren, sonst entsteht ein Fehler</span></p>
-</blockquote></div>
+</blockquote><h2 id="Webalizer" data-id="Webalizer"><a class="anchor hidden-xs" href="#Webalizer" title="Webalizer"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Webalizer</span></h2><blockquote>
+<p><strong><span>Hinweis:</span></strong><br>
+<span>Behebe Fehler: "port 22: Connection refused"</span><br>
+<span>sudo apt-get update</span><br>
+<span>sudo apt-get install openssh-server</span><br>
+<span>sudo ufw allow 22</span></p>
+</blockquote><ol start="31" style="padding-left: 2em;">
+<li><span>sudo apt install webalizer -y</span></li>
+<li><span>scp labor@</span><code>hostname</code><span>:webalizer_2.23.08-3.3_amd64.deb .</span></li>
+<li><span>chown labor:labor webalizer_2.23.08-3.3_amd64.deb</span></li>
+<li><span>chown +x webalizer_2.23.08-3.3_amd64.deb</span></li>
+<li><span>dpkg -i webalizer_2.23.08-3.3_amd64.deb</span></li>
+<li><span>webalizer -v</span></li>
+<li><span>cd /etc/webalizer</span></li>
+<li><span>webalizer.conf</span></li>
+</ol><details>
+<summary>Klick mich!</summary>
+<pre><code>LogFile /var/log/apache2/access.log
+OutputDir /var/www/webalizer
+ReportTitle Usage statistics for
+HostName DESKTOP-9LI3O79
+PageType        htm*
+PageType        cgi
+PageType        php3
+PageType        php
+HideURL         *.gif
+HideURL         *.GIF
+HideURL         *.jpg
+HideURL         *.JPG
+HideURL         *.png
+HideURL         *.PNG
+HideURL         *.ra
+IgnoreSite      localhost
+IgnoreReferrer  localhost
+SearchEngine    .google.        q=
+SearchEngine    yahoo.com       p=
+SearchEngine    altavista.com   q=
+SearchEngine    aolsearch.      query=
+SearchEngine    ask.co          q=
+SearchEngine    eureka.com      q=
+SearchEngine    lycos.com       query=
+SearchEngine    hotbot.com      MT=
+SearchEngine    msn.com         q=
+SearchEngine    infoseek.com    qt=
+SearchEngine    excite          search=
+SearchEngine    netscape.com    query=
+SearchEngine    mamma.com       query=
+SearchEngine    alltheweb.com   q=
+SearchEngine    northernlight.com  qr=
+SearchEngine    sensis.com.au   find=
+</code></pre>
+</details></div>
     <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
         <div class="pull-right dropdown">
             <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
@@ -354,6 +405,10 @@ emailAddress_default = medi.edi@gmx.de
 <li><a href="#Aufsetzen-des-Webservers-unter-SystemD" title="Aufsetzen des Webservers unter SystemD">Aufsetzen des Webservers unter SystemD</a></li>
 </ul>
 </li>
+<li class=""><a href="#tip1" title=""></a><ul class="nav">
+<li class=""><a href="#Webalizer" title="Webalizer">Webalizer</a></li>
+</ul>
+</li>
 </ul>
 </div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
             </ul>
@@ -372,6 +427,10 @@ emailAddress_default = medi.edi@gmx.de
 <li><a href="#Anforderungen" title="Anforderungen">Anforderungen</a></li>
 <li><a href="#Ausgangslage-Betriebssystem" title="Ausgangslage, Betriebssystem">Ausgangslage, Betriebssystem</a></li>
 <li><a href="#Aufsetzen-des-Webservers-unter-SystemD" title="Aufsetzen des Webservers unter SystemD">Aufsetzen des Webservers unter SystemD</a></li>
+</ul>
+</li>
+<li class=""><a href="#tip1" title=""></a><ul class="nav">
+<li class=""><a href="#Webalizer" title="Webalizer">Webalizer</a></li>
 </ul>
 </li>
 </ul>
@@ -526,4 +585,3 @@ emailAddress_default = medi.edi@gmx.de
 </body>
 
 </html>
-
