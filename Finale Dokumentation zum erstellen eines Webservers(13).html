@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Finale Dokumentation zum erstellen eines Webservers - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{background:#fff;color:#333;display:block;overflow-x:auto;padding:.5em}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{background-color:#eaffea;color:#55a532}.hljs-deletion{background-color:#ffecec;color:#bd2c00}.hljs-link{text-decoration:underline}.markdown-body{word-wrap:break-word;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;font-size:16px;line-height:1.5}.markdown-body:after,.markdown-body:before{content:"";display:table}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;line-height:1;margin-left:-20px;padding-right:4px}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-bottom:16px;margin-top:0}.markdown-body hr{background-color:#e7e7e7;border:0;height:.25em;margin:24px 0;padding:0}.markdown-body blockquote{border-left:.25em solid #ddd;color:#777;font-size:16px;padding:0 1em}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{background-color:#fcfcfc;border:1px solid;border-color:#ccc #ccc #bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb;color:#555;display:inline-block;font-size:11px;line-height:10px;padding:3px 5px;vertical-align:middle}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{font-weight:600;line-height:1.25;margin-bottom:16px;margin-top:24px}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{border-bottom:1px solid #eee;padding-bottom:.3em}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{color:#777;font-size:.85em}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{list-style-type:none;padding:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-bottom:0;margin-top:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{font-size:1em;font-style:italic;font-weight:700;margin-top:16px;padding:0}.markdown-body dl dd{margin-bottom:16px;padding:0 16px}.markdown-body table{display:block;overflow:auto;width:100%;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{background-color:#fff;box-sizing:initial;max-width:100%}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{background-color:initial;max-width:none;vertical-align:text-top}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{border:1px solid #ddd;display:block;float:left;margin:13px 0 0;overflow:hidden;padding:7px;width:auto}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{clear:both;color:#333;display:block;padding:5px 0 0}.markdown-body span.align-center{clear:both;display:block;overflow:hidden}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{clear:both;display:block;overflow:hidden}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{background-color:#0000000a;border-radius:3px;font-size:85%;margin:0;padding:.2em 0}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{content:"\00a0";letter-spacing:-.2em}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{background:#0000;border:0;font-size:100%;margin:0;padding:0;white-space:pre;word-break:normal}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{border-radius:3px;font-size:85%;line-height:1.45;overflow:auto}.markdown-body:not(.next-editor) pre{padding:16px}.markdown-body pre code,.markdown-body pre tt{word-wrap:normal;background-color:initial;border:0;display:inline;line-height:inherit;margin:0;max-width:auto;overflow:visible;padding:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{font-size:12px;line-height:1;overflow:hidden;padding:5px;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{background:#fff;border:0;padding:10px 8px 9px;text-align:right}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{background:#f8f8f8;border-top:0;font-weight:700}.news .alert .markdown-body blockquote{border:0;padding:0 0 0 40px}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{cursor:default!important;float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle}.markdown-alert{border-left-style:solid;border-left-width:4px;color:inherit;margin-bottom:16px;padding:8px 16px}.markdown-alert .markdown-alert-title{align-items:center;display:flex;font-weight:500;line-height:1;white-space:break-spaces}.markdown-body .markdown-alert>*{margin-bottom:0;margin-top:16px}.markdown-body .markdown-alert .selection-popover,.markdown-body .markdown-alert>:first-child{margin-top:0}.markdown-alert.markdown-alert-note{border-left-color:#0969da}.markdown-alert.markdown-alert-note .markdown-alert-title{fill:currentColor;color:#0969da}.markdown-alert.markdown-alert-tip{border-left-color:#1a7f37}.markdown-alert.markdown-alert-tip .markdown-alert-title{fill:currentColor;color:#1a7f37}.markdown-alert.markdown-alert-important{border-left-color:#8250df}.markdown-alert.markdown-alert-important .markdown-alert-title{fill:currentColor;color:#8250df}.markdown-alert.markdown-alert-warning{border-left-color:#9a6700}.markdown-alert.markdown-alert-warning .markdown-alert-title{fill:currentColor;color:#9a6700}.markdown-alert.markdown-alert-caution{border-left-color:#d1242f}.markdown-alert.markdown-alert-caution .markdown-alert-title{fill:currentColor;color:#d1242f}:root[theme=dark] :not([theme])>*>.markdown-body,:root[theme] [theme=dark] .markdown-body{color:#d4d4d8}:root[theme=dark] :not([theme])>*>.markdown-body h1,:root[theme=dark] :not([theme])>*>.markdown-body h2,:root[theme] [theme=dark] .markdown-body h1,:root[theme] [theme=dark] .markdown-body h2{border-bottom-color:#52525b}:root[theme=dark] :not([theme])>*>.markdown-body h6,:root[theme] [theme=dark] .markdown-body h6{color:#a1a1aa}:root[theme=dark] :not([theme])>*>.markdown-body details,:root[theme] [theme=dark] .markdown-body details{background-color:#303036;color:#d4d4d8}:root[theme=dark] :not([theme])>*>.markdown-body details summary::marker:first-child,:root[theme] [theme=dark] .markdown-body details summary::marker:first-child{color:#d4d4d8}:root[theme=dark] :not([theme])>*>.markdown-body details:hover,:root[theme] [theme=dark] .markdown-body details:hover{background:#303036}:root[theme=dark] :not([theme])>*>.markdown-body details code,:root[theme=dark] :not([theme])>*>.markdown-body details[open]:hover,:root[theme] [theme=dark] .markdown-body details code,:root[theme] [theme=dark] .markdown-body details[open]:hover{background-color:#303036}:root[theme=dark] :not([theme])>*>.markdown-body hr,:root[theme] [theme=dark] .markdown-body hr{background-color:#52525b}:root[theme=dark] :not([theme])>*>.markdown-body blockquote,:root[theme] [theme=dark] .markdown-body blockquote{border-left-color:#71717a;color:#a1a1aa}:root[theme=dark] :not([theme])>*>.markdown-body blockquote a span,:root[theme] [theme=dark] .markdown-body blockquote a span{color:#9894f9}:root[theme=dark] :not([theme])>*>.markdown-body a.mention-anchor.user-card-popover,:root[theme] [theme=dark] .markdown-body a.mention-anchor.user-card-popover{background-color:#453aff26;color:#9894f9}:root[theme=dark] :not([theme])>*>.markdown-body ::selection,:root[theme] [theme=dark] .markdown-body ::selection{background-color:#453aff99}:root[theme=dark] :not([theme])>*>.markdown-body .alert.alert-info,:root[theme] [theme=dark] .markdown-body .alert.alert-info{background-color:#38bdf81a;border-left-color:#0ea5e9;color:#38bdf8}:root[theme=dark] :not([theme])>*>.markdown-body .alert.alert-warning,:root[theme] [theme=dark] .markdown-body .alert.alert-warning{background-color:#fbbf241a;border-left-color:#f59e0b;color:#f59e0b}:root[theme=dark] :not([theme])>*>.markdown-body .alert.alert-success,:root[theme] [theme=dark] .markdown-body .alert.alert-success{background-color:#6db19d26;border-left-color:#55b685;color:#6db19d}:root[theme=dark] :not([theme])>*>.markdown-body .alert.alert-danger,:root[theme] [theme=dark] .markdown-body .alert.alert-danger{background-color:#ef444433;border-left-color:#ef4444;color:#f87171}:root[theme=dark] :not([theme])>*>.markdown-body .mark,:root[theme=dark] :not([theme])>*>.markdown-body mark,:root[theme] [theme=dark] .markdown-body .mark,:root[theme] [theme=dark] .markdown-body mark{background-color:#fbbf241a;color:#f59e0b}:root[theme=dark] :not([theme])>*>.markdown-body .mark span,:root[theme=dark] :not([theme])>*>.markdown-body mark span,:root[theme] [theme=dark] .markdown-body .mark span,:root[theme] [theme=dark] .markdown-body mark span{color:#fbbf24}:root[theme=dark] :not([theme])>*>.markdown-body .highlight pre,:root[theme=dark] :not([theme])>*>.markdown-body pre,:root[theme] [theme=dark] .markdown-body .highlight pre,:root[theme] [theme=dark] .markdown-body pre{background-color:#303036;color:#a1a1aa}:root[theme=dark] :not([theme])>*>.markdown-body .style .token.string,:root[theme=dark] :not([theme])>*>.markdown-body .token.entity,:root[theme=dark] :not([theme])>*>.markdown-body .token.operator,:root[theme=dark] :not([theme])>*>.markdown-body .token.url,:root[theme=dark] :not([theme])>*>.markdown-body.language-css,:root[theme=dark] :not([theme])>*>.markdown-body.token.string,:root[theme] [theme=dark] .markdown-body .style .token.string,:root[theme] [theme=dark] .markdown-body .token.entity,:root[theme] [theme=dark] .markdown-body .token.operator,:root[theme] [theme=dark] .markdown-body .token.url,:root[theme] [theme=dark] .markdown-body.language-css,:root[theme] [theme=dark] .markdown-body.token.string{background:none}:root[theme=dark] :not([theme])>*>.markdown-body :not(pre)>code,:root[theme] [theme=dark] .markdown-body :not(pre)>code{background-color:#3f3f46}:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-tag,:root[theme] [theme=dark] .markdown-body code .hljs-tag{color:#d4d4d8}:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-keyword,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-selector-tag,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-type,:root[theme=dark] :not([theme])>*>.markdown-body code .token.boolean,:root[theme=dark] :not([theme])>*>.markdown-body code .token.constant,:root[theme=dark] :not([theme])>*>.markdown-body code .token.deleted,:root[theme=dark] :not([theme])>*>.markdown-body code .token.number,:root[theme=dark] :not([theme])>*>.markdown-body code .token.property,:root[theme=dark] :not([theme])>*>.markdown-body code .token.symbol,:root[theme=dark] :not([theme])>*>.markdown-body code .token.tag,:root[theme] [theme=dark] .markdown-body code .hljs-keyword,:root[theme] [theme=dark] .markdown-body code .hljs-selector-tag,:root[theme] [theme=dark] .markdown-body code .hljs-type,:root[theme] [theme=dark] .markdown-body code .token.boolean,:root[theme] [theme=dark] .markdown-body code .token.constant,:root[theme] [theme=dark] .markdown-body code .token.deleted,:root[theme] [theme=dark] .markdown-body code .token.number,:root[theme] [theme=dark] .markdown-body code .token.property,:root[theme] [theme=dark] .markdown-body code .token.symbol,:root[theme] [theme=dark] .markdown-body code .token.tag{color:#ff70b4}:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-attribute,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-bullet,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-literal,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-number,:root[theme=dark] :not([theme])>*>.markdown-body code .hljs-symbol,:root[theme=dark] :not([theme])>*>.markdown-body code .token.atrule,:root[theme=dark] :not([theme])>*>.markdown-body code .token.attr-value,:root[theme=dark] :not([theme])>*>.markdown-body code .token.keyword,:root[theme] [theme=dark] .markdown-body code .hljs-attribute,:root[theme] [theme=dark] .markdown-body code .hljs-bullet,:root[theme] [theme=dark] .markdown-body code .hljs-literal,:root[theme] [theme=dark] .markdown-body code .hljs-number,:root[theme] [theme=dark] .markdown-body code .hljs-symbol,:root[theme] [theme=dark] .markdown-body code .token.atrule,:root[theme] [theme=dark] .markdown-body code .token.attr-value,:root[theme] [theme=dark] .markdown-body code .token.keyword{color:#9894f9}:root[theme=dark] :not([theme])>*>.markdown-body pre.part.plugin-rendered,:root[theme] [theme=dark] .markdown-body pre.part.plugin-rendered{background-color:#fff;color:#000}:root[theme=dark] :not([theme])>*>.markdown-body table,:root[theme] [theme=dark] .markdown-body table{border-color:#52525b}:root[theme=dark] :not([theme])>*>.markdown-body table thead tr,:root[theme] [theme=dark] .markdown-body table thead tr{background-color:#303036;border-bottom-color:#52525b}:root[theme=dark] :not([theme])>*>.markdown-body table td,:root[theme=dark] :not([theme])>*>.markdown-body table th,:root[theme] [theme=dark] .markdown-body table td,:root[theme] [theme=dark] .markdown-body table th{border-left-color:#52525b;border-top-color:#52525b}:root[theme=dark] :not([theme])>*>.markdown-body table tbody tr,:root[theme=dark] :not([theme])>*>.markdown-body table tr:nth-child(2n),:root[theme] [theme=dark] .markdown-body table tbody tr,:root[theme] [theme=dark] .markdown-body table tr:nth-child(2n){background-color:#27272a}:root[theme=light] :not([theme])>*>.markdown-body,:root[theme] [theme=light] .markdown-body{color:#3f3f46}:root[theme=light] :not([theme])>*>.markdown-body h1,:root[theme=light] :not([theme])>*>.markdown-body h2,:root[theme] [theme=light] .markdown-body h1,:root[theme] [theme=light] .markdown-body h2{border-bottom-color:#e4e4e7}:root[theme=light] :not([theme])>*>.markdown-body h6,:root[theme] [theme=light] .markdown-body h6{color:#71717a}:root[theme=light] :not([theme])>*>.markdown-body iframe,:root[theme] [theme=light] .markdown-body iframe{border:1px solid #e4e4e7;box-sizing:border-box}:root[theme=light] :not([theme])>*>.markdown-body details,:root[theme] [theme=light] .markdown-body details{background-color:#f4f4f5}:root[theme=light] :not([theme])>*>.markdown-body details:hover,:root[theme] [theme=light] .markdown-body details:hover{background:#e4e4e7}:root[theme=light] :not([theme])>*>.markdown-body details[open]:hover,:root[theme] [theme=light] .markdown-body details[open]:hover{background-color:#f4f4f5}:root[theme=light] :not([theme])>*>.markdown-body details code,:root[theme] [theme=light] .markdown-body details code{background-color:#e4e4e7}:root[theme=light] :not([theme])>*>.markdown-body hr,:root[theme] [theme=light] .markdown-body hr{background-color:#d4d4d8}:root[theme=light] :not([theme])>*>.markdown-body blockquote,:root[theme] [theme=light] .markdown-body blockquote{border-left-color:#e4e4e7;color:#71717a}:root[theme=light] :not([theme])>*>.markdown-body blockquote a span,:root[theme] [theme=light] .markdown-body blockquote a span{color:#564dff}:root[theme=light] :not([theme])>*>.markdown-body a.mention-anchor.user-card-popover,:root[theme] [theme=light] .markdown-body a.mention-anchor.user-card-popover{background-color:#ecebfe;color:#564dff}:root[theme=light] :not([theme])>*>.markdown-body ::selection,:root[theme] [theme=light] .markdown-body ::selection{background-color:#cccafc}:root[theme=light] :not([theme])>*>.markdown-body .alert.alert-info,:root[theme] [theme=light] .markdown-body .alert.alert-info{background-color:#e0f2fe;border-left-color:#0284c7;color:#0284c7}:root[theme=light] :not([theme])>*>.markdown-body .alert.alert-warning,:root[theme] [theme=light] .markdown-body .alert.alert-warning{background-color:#fef3c799;border-left-color:#f59e0b;color:#f59e0b}:root[theme=light] :not([theme])>*>.markdown-body .alert.alert-success,:root[theme] [theme=light] .markdown-body .alert.alert-success{background-color:#d9f9e5;border-left-color:#43946c;color:#43946c}:root[theme=light] :not([theme])>*>.markdown-body .alert.alert-danger,:root[theme] [theme=light] .markdown-body .alert.alert-danger{background-color:#fee2e299;border-left-color:#ef4444;color:#ef4444}:root[theme=light] :not([theme])>*>.markdown-body .mark,:root[theme=light] :not([theme])>*>.markdown-body mark,:root[theme] [theme=light] .markdown-body .mark,:root[theme] [theme=light] .markdown-body mark{background-color:#fef3c799;color:#f59e0b}:root[theme=light] :not([theme])>*>.markdown-body .mark span,:root[theme=light] :not([theme])>*>.markdown-body mark span,:root[theme] [theme=light] .markdown-body .mark span,:root[theme] [theme=light] .markdown-body mark span{color:#f59e0b}:root[theme=light] :not([theme])>*>.markdown-body .highlight pre,:root[theme=light] :not([theme])>*>.markdown-body pre,:root[theme] [theme=light] .markdown-body .highlight pre,:root[theme] [theme=light] .markdown-body pre{background-color:#f4f4f5}:root[theme=light] :not([theme])>*>.markdown-body pre.part.plugin-rendered,:root[theme] [theme=light] .markdown-body pre.part.plugin-rendered{background-color:inherit;color:inherit}:root[theme=light] :not([theme])>*>.markdown-body :not(pre)>code,:root[theme] [theme=light] .markdown-body :not(pre)>code{background-color:#0000000a}:root[theme=light] :not([theme])>*>.markdown-body table,:root[theme] [theme=light] .markdown-body table{border-color:#e4e4e7}:root[theme=light] :not([theme])>*>.markdown-body table thead tr,:root[theme] [theme=light] .markdown-body table thead tr{background-color:#f4f4f5;border-bottom-color:#d4d4d8}:root[theme=light] :not([theme])>*>.markdown-body table td,:root[theme=light] :not([theme])>*>.markdown-body table th,:root[theme] [theme=light] .markdown-body table td,:root[theme] [theme=light] .markdown-body table th{border-left-color:#e4e4e7;border-top-color:#e4e4e7}:root[theme=light] :not([theme])>*>.markdown-body table tbody tr,:root[theme=light] :not([theme])>*>.markdown-body table tr:nth-child(2n),:root[theme] [theme=light] .markdown-body table tbody tr,:root[theme] [theme=light] .markdown-body table tr:nth-child(2n){background-color:#fdfdfd}.markdown-body{font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;max-width:758px;overflow:visible!important;padding-bottom:40px;padding-top:40px;position:relative}.markdown-body>*{max-width:100%;overflow:auto}.markdown-body .alert a,.markdown-body a{color:var(--hmd-tw-link-text-default)}.markdown-body .alert a:focus,.markdown-body .alert a:hover,.markdown-body a:focus,.markdown-body a:hover{color:var(--hmd-tw-link-text-hover)}.markdown-body .alert a:hover,.markdown-body a:hover{text-decoration-thickness:2px;text-underline-offset:4px}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5{font-family:Readex Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;font-weight:700}.markdown-body h1,.markdown-body h2{border-bottom:1px solid}.markdown-body iframe,.markdown-body img{background-color:initial;border-radius:6px;margin:.5rem 0}.markdown-body iframe{max-width:100%;width:728px}.markdown-body details{border-radius:4px;margin-bottom:.5rem;padding:.5rem 1rem}.markdown-body details:hover{transition:all .1s}.markdown-body details summary+p{margin-top:.5rem}.markdown-body details p:last-child{margin-bottom:0}.markdown-body hr{height:2px}.markdown-body img.emoji{border:none;height:20px;vertical-align:middle;width:20px}.markdown-body li small{color:#a1a1aa}.markdown-body blockquote{border-left:3px solid}.markdown-body blockquote .small,.markdown-body blockquote small,.markdown-body li small{display:initial;font-size:85%}.markdown-body a.mention-anchor:before{content:"";margin-right:0}.markdown-body a.mention-anchor.user-card-popover{border-radius:4px;padding:1px 4px}.markdown-body .alert{border:none;border-radius:4px;margin-top:10px}.markdown-body .alert h2,.markdown-body .alert h3,.markdown-body .alert h4,.markdown-body .alert h5,.markdown-body .alert h6{margin-top:0}.markdown-body .alert h2{border:none}.markdown-body .alert.alert-danger,.markdown-body .alert.alert-info,.markdown-body .alert.alert-success,.markdown-body .alert.alert-warning{border-left:3px solid}.markdown-body .highlight pre,.markdown-body .mark,.markdown-body mark,.markdown-body pre{border-radius:4px}.markdown-body pre.part.abc,.markdown-body pre.part.flow-chart,.markdown-body pre.part.fretboard,.markdown-body pre.part.graphviz,.markdown-body pre.part.mermaid,.markdown-body pre.part.sequence-diagram,.markdown-body pre.part.vega-embed{border-radius:4px;max-width:100%;overflow:auto}.markdown-body table{border:1px solid;border-radius:4px;width:fit-content}.markdown-body table thead tr{border-bottom:1px solid;border-top:none}.markdown-body table tbody tr,.markdown-body table thead tr th{border-top:none}.markdown-body table tbody tr td:first-child,.markdown-body table thead,.markdown-body table thead th:first-child{border-left:none}.markdown-body table td,.markdown-body table th{border:1px solid;border-bottom:none;border-right:none;padding:6px 13px}.markdown-body.next-editor{overflow-x:hidden!important}.markdown-body pre{border:inherit}.markdown-body code{color:inherit}html[lang^=ja] .markdown-body code code,html[lang^=ja] .markdown-body code kbd,html[lang^=ja] .markdown-body code pre{font-family:Source Code Pro,Consolas,monaco,Meiryo,ＭＳ ゴシック,MS Gothic,monospace}html[lang=zh-tw] .markdown-body code code,html[lang=zh-tw] .markdown-body code kbd,html[lang=zh-tw] .markdown-body code pre{font-family:Source Code Pro,Consolas,monaco,Microsoft JhengHei,微軟正黑,monospace}html[lang=zh-cn] .markdown-body code code,html[lang=zh-cn] .markdown-body code kbd,html[lang=zh-cn] .markdown-body code pre{font-family:Source Code Pro,Consolas,monaco,Microsoft YaHei,微软雅黑,monospace}html .markdown-body code[lang^=ja] code,html .markdown-body code[lang^=ja] kbd,html .markdown-body code[lang^=ja] pre{font-family:Source Code Pro,Consolas,monaco,Meiryo,ＭＳ ゴシック,MS Gothic,monospace}html .markdown-body code[lang=zh-tw] code,html .markdown-body code[lang=zh-tw] kbd,html .markdown-body code[lang=zh-tw] pre{font-family:Source Code Pro,Consolas,monaco,Microsoft JhengHei,微軟正黑,monospace}html .markdown-body code[lang=zh-cn] code,html .markdown-body code[lang=zh-cn] kbd,html .markdown-body code[lang=zh-cn] pre{font-family:Source Code Pro,Consolas,monaco,Microsoft YaHei,微软雅黑,monospace}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{border-right:2px solid #766df8;box-sizing:initial;color:#a1a1aa;cursor:default;display:inline-block;min-width:20px;padding:0 8px 0 0;position:relative;text-align:right;z-index:4}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-bottom:none;border-left:none;border-top:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-collapse:inherit!important;border-spacing:0}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{margin-bottom:unset;overflow:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert{display:flex;flex-direction:column;gap:16px}.markdown-body .alert>*{margin:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{background-color:inherit;border-radius:0;overflow:visible;text-align:center;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{height:100%;max-width:100%}.markdown-body pre>code.wrap{word-wrap:break-word;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap}.markdown-body pre.pseudocode{white-space-collapse:collapse}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}:root[theme] .markdown-body{line-height:1.75}:root[theme] .markdown-body ::marker,:root[theme] .markdown-body code{color:var(--hmd-tw-text-default)}:root[theme] .markdown-body h1,:root[theme] .markdown-body h2,:root[theme] .markdown-body h3,:root[theme] .markdown-body h4,:root[theme] .markdown-body h5,:root[theme] .markdown-body h6{overflow:visible}:root[theme] .markdown-body h1 .octicon-link,:root[theme] .markdown-body h2 .octicon-link,:root[theme] .markdown-body h3 .octicon-link,:root[theme] .markdown-body h4 .octicon-link,:root[theme] .markdown-body h5 .octicon-link,:root[theme] .markdown-body h6 .octicon-link{color:var(--hmd-tw-text-subtle)}:root[theme] .markdown-body .anchor{left:0;margin-left:0;position:absolute}:root[theme] .markdown-body .gist table{border-color:inherit}:root[theme] .markdown-body .gist table thead tr{background-color:inherit;border-bottom-color:inherit}:root[theme] .markdown-body .gist table td,:root[theme] .markdown-body .gist table th{border-left-color:inherit;border-top-color:inherit}:root[theme] .markdown-body .gist table tbody tr,:root[theme] .markdown-body .gist table tr:nth-child(2n){background-color:inherit}:root[theme] .markdown-body ol ol,:root[theme] .markdown-body ol ul,:root[theme] .markdown-body ul ol,:root[theme] .markdown-body ul ul{margin-bottom:12px;margin-top:6px}@media (max-width:767px){.markdown-body h1{font-size:1.6em}.markdown-body h2{font-size:1.4em}.markdown-body h3{font-size:1.125em}}.vimeo,.youtube{background-color:#000;background-position:50%;background-repeat:no-repeat;background-size:contain;cursor:pointer;display:table;overflow:hidden;text-align:center}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{object-fit:contain;width:100%;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{height:100%;left:0;position:absolute;top:0;width:100%}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{color:#fff;height:auto;left:50%;opacity:.3;position:absolute;top:50%;transform:translate(-50%,-50%);transition:opacity .2s;width:auto;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.figma{display:table;padding-bottom:56.25%;position:relative;width:100%}.figma iframe{border:1px solid #eee;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.markmap-container{height:300px}.markmap-container>svg{height:100%;width:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{color:var(--hmd-tw-text-default);font-size:14px;margin:25px auto -25px;max-width:760px;position:relative;z-index:2}.ui-infobar .ui-user-icon.small{height:18px;margin:2px;vertical-align:top;width:18px}.toc .invisable-node{list-style-type:none}.ui-toc{bottom:20px;position:fixed;z-index:998}.ui-toc.both-mode{margin-left:2px}.ui-toc.both-mode .ui-toc-label{border-bottom-left-radius:0;border-top-left-radius:0;height:40px;padding:10px 4px}:root[theme=light] :not([theme])>*>.ui-toc .ui-toc-label,:root[theme] [theme=light] .ui-toc-label{background-color:#fdfdfd;border-color:#d4d4d8;color:#a1a1aa}:root[theme=light] :not([theme])>*>.ui-toc .ui-toc-label:active,:root[theme=light] :not([theme])>*>.ui-toc .ui-toc-label:hover,:root[theme] [theme=light] .ui-toc-label:active,:root[theme] [theme=light] .ui-toc-label:hover{background-color:#f4f4f5;border-color:#d4d4d8;color:#a1a1aa}:root[theme=dark] :not([theme])>*>.ui-toc .ui-toc-label,:root[theme=dark] :not([theme])>*>.ui-toc .ui-toc-label:active,:root[theme=dark] :not([theme])>*>.ui-toc .ui-toc-label:hover,:root[theme] [theme=dark] .ui-toc-label,:root[theme] [theme=dark] .ui-toc-label:active,:root[theme] [theme=dark] .ui-toc-label:hover{background-color:#303036;border-color:#52525b;color:#a1a1aa}:root[theme=dark] :not([theme])>*>.ui-toc.both-mode .ui-toc-label,:root[theme] [theme=dark] .ui-toc.both-mode .ui-toc-label{background-color:#303036;border-color:#3f3f46;color:#d4d4d8}:root[theme=dark] :not([theme])>*>.ui-toc.both-mode .ui-toc-label:hover,:root[theme] [theme=dark] .ui-toc.both-mode .ui-toc-label:hover{background-color:#52525b}.ui-toc-label{border:1px solid;transition:opacity .2s}.ui-toc .open .ui-toc-label,.ui-toc-label:hover{opacity:1;transition:opacity .2s}.ui-toc-dropdown{letter-spacing:normal;margin-bottom:20px;margin-top:20px;max-height:70vh;max-width:45vw;overflow:auto;padding-left:10px;padding-right:10px;text-align:inherit;width:25vw}.ui-toc-dropdown.dropdown-menu{box-shadow:0 3px 15px 0 #00000026}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{letter-spacing:.0029em;padding-right:0}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{color:var(--hmd-tw-text-subtle);display:block;font-size:12px;font-weight:500;line-height:16px;padding:4px 20px}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{background-color:initial;border-color:var(--hmd-tw-border-bold);border-style:solid;border-width:0 0 0 1px;color:#000;color:var(--hmd-tw-text-emphasize);padding-left:19px;text-decoration:none}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{border-left:none;border-right:1px solid #000;padding-right:19px}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{background-color:initial;border-color:var(--hmd-tw-border-bold);border-style:solid;border-width:0 0 0 2px;color:var(--hmd-tw-text-emphasize);font-weight:600;padding-left:18px}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{border-width:0 2px 0 medium;border-left:0;border-color:var(--hmd-tw-border-bold);border-style:solid;padding-right:18px}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:30px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:40px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{font-weight:500;padding-left:28px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{font-weight:500;padding-left:38px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.ui-affix-toc{max-height:70vh;max-width:15vw;overflow:auto;position:fixed;top:0}.back-to-top,.expand-toggle,.go-to-bottom{color:var(--hmd-tw-text-subtle);display:block;font-size:12px;font-weight:500;line-height:16px;margin-left:10px;margin-top:10px;padding:2px 10px}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:var(--hmd-tw-text-primary);text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{background-position:50%;background-repeat:no-repeat;background-size:cover;border-radius:50%;display:block;height:20px;margin-bottom:2px;margin-right:5px;margin-top:2px;width:20px}.ui-user-icon.small{display:inline-block;height:18px;margin:0 0 .2em;vertical-align:middle;width:18px}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{cursor:pointer;vertical-align:middle}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{text-decoration:none}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{text-decoration:underline}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}.inline-spoiler-section{cursor:pointer}.inline-spoiler-section .spoiler-text{background-color:#333;border-radius:2px}.inline-spoiler-section .spoiler-text>*{opacity:0}.inline-spoiler-section .spoiler-img{filter:blur(10px)}.inline-spoiler-section.raw{background-color:#333;border-radius:2px}.inline-spoiler-section.raw>*{opacity:0}.inline-spoiler-section.unveil{cursor:auto}.inline-spoiler-section.unveil .spoiler-text{background-color:#3333331a}.inline-spoiler-section.unveil .spoiler-text>*{opacity:1}.inline-spoiler-section.unveil .spoiler-img{filter:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{color:#222;position:relative;z-index:1}.markdown-body.slides:before{background-color:currentColor;bottom:0;box-shadow:0 0 0 50vw;content:"";display:block;left:0;position:absolute;right:0;top:0;z-index:-1}.markdown-body.slides section[data-markdown]{background-color:#fff;margin-bottom:1.5em;position:relative;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{left:1em;max-height:100%;overflow:hidden;position:absolute;right:1em;top:50%;transform:translateY(-50%)}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{border:3px solid #777;content:"";height:1.5em;position:absolute;right:1em;top:-1.5em}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;-webkit-overflow-scrolling:touch;font-family:Source Sans Pro,Helvetica,Arial,sans-serif;letter-spacing:.025em}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}svg{text-shadow:none}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled comment-inner" data-hard-breaks="true"><h1 id="Apache-2-Webserver-einrichten" data-id="Apache-2-Webserver-einrichten"><a class="anchor hidden-xs" href="#Apache-2-Webserver-einrichten" title="Apache-2-Webserver-einrichten"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Apache 2 Webserver einrichten</span></h1><h2 id="Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz" data-id="Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz"><a class="anchor hidden-xs" href="#Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz" title="Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Eine Anleitung von Jonathan Binder und Üzeyir Yilmaz</span></h2><h3 id="Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024" data-id="Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024"><a class="anchor hidden-xs" href="#Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024" title="Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Professor: Erwin Hoffman Informatik-Projekt SS 2024</span></h3><p><span>Dokument zum Ablauf zur Erstellung eines eigenen Webservers vom Typ Apache 2.</span></p><h1 id="Inhaltsverzeichnis" data-id="Inhaltsverzeichnis"><a class="anchor hidden-xs" href="#Inhaltsverzeichnis" title="Inhaltsverzeichnis"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Inhaltsverzeichnis</span></h1><ol style="padding-left: 2em;">
+<li><a href="#Einf%C3%BChrung"><span>Einfürhung</span></a></li>
+<li><a href="#Anforderungen"><span>Anforderungen</span></a></li>
+<li><a href="#Ausgangslage,-Betriebssystem"><span>Ausgangslage, Betriebssystem</span></a></li>
+<li><a href="#Aufsetzen-des-Webservers-unter-SystemD"><span>Aufsetzen des Webservers unter SystemD</span></a></li>
+<li><a href="#Zusaetzliche-Software"><span>Zusätzliche Software</span></a></li>
+<li><a href="#Einbettung-in-das-gegebene-System"><span>Einbettung in das gegebene System</span></a></li>
+<li><a href="#Komponenten-Interaktion"><span>Komponenten Interaktion</span></a></li>
+<li><a href="#Anpassung-der-Skripte"><span>Anpassung der Skripte</span></a></li>
+<li><a href="#Beschreibung-der-Prozesskette"><span>Beschreibung der Prozesskette</span></a></li>
+<li><a href="#Erl%C3%A4uterung-der-httpd.conf-Datei"><span>Erläuterung der httpd.conf Datei</span></a></li>
+<li><a href="#Dokument-Root"><span>Dokument-Root</span></a></li>
+<li><a href="#Zertifikate"><span>Zertifikate</span></a></li>
+<li><a href="#Monitoring-via-Webalizer"><span>Monitoring via Webalizer</span></a></li>
+</ol><details>
+<summary>Verzeichnistruktur</summary>
+<pre><code>root
+├──/etc
+|    ├──hosts
+|    ├──/webalizer
+|    |   └──webalizer.conf
+|    ├──/systemd
+|    |   └──/system
+|    |       └──/multi-user.target.wants
+|    |           └──apache2.service
+|    └──/apache2
+|        ├──apche2    
+|        ├──.htpasswd    
+|        ├──/conf-available
+|        ├──/conf-enabled
+|        ├──/mods-available
+|        ├──/mods-enabled
+|        |   └──ssl.conf
+|        |   └──ssl.load
+|        ├──/sites-available
+|        ├──/sites-enabled
+|        |   └──jonzey.conf
+|        └──/ssl
+|            └──make_CA.sh
+|            └──make_server.sh
+|            └──rootCA_ECC.cfg
+|            └──`hostname`_ECC.cfg
+└──/var
+    ├──/www
+    |    ├──/html
+    |    ├──/jonzey
+    |    |    └──index.html
+    |    |    └──.htaccess
+    |    └──/webalizer
+    └──/log
+        └──/apache2
+            └──access.log
+            └──error.log
+</code></pre>
+</details><h2 id="Einführung" data-id="Einführung"><a class="anchor hidden-xs" href="#Einführung" title="Einführung"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Einführung</span></h2><p><span>Apache2 ist einer der bekanntesten und am weitesten verbreiteten Webserver der Welt. Entwickelt von der Apache Software Foundation, bietet dieser Open-Source-Webserver eine robuste, flexible und leistungsstarke Plattform für die Bereitstellung von Webinhalten und Anwendungen.</span></p><p><span>Mit seiner modularen Architektur ermöglicht Apache2 eine einfache Erweiterung und Anpassung an spezifische Bedürfnisse. Durch eine Vielzahl an verfügbaren Modulen können Administratoren Funktionen wie URL-Umschreibungen, Authentifizierung und SSL-Verschlüsselung problemlos integrieren.</span></p><p><span>Diese Dokumentation bietet einen kleinen Einblick in die Installation, Konfiguration und Verwaltung von Apache2.</span></p><h2 id="Anforderungen" data-id="Anforderungen"><a class="anchor hidden-xs" href="#Anforderungen" title="Anforderungen"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Anforderungen</span></h2><p><span>Das Hauptziel dieses Projekts ist es, einen produktiven Internetdienst mit dem Apache 2.4-Webserver auf dem FreeBSD-Betriebssystem zu entwerfen, bereitzustellen und zu konfigurieren. Dabei soll ein umfassendes Verständnis für die Funktionen, Merkmale und Fähigkeiten des Apache 2.4-Webservers vermittelt werden. Schritt für Schritt wird die Einrichtung des Webservers durchgeführt, um die gewünschten Ergebnisse zu erreichen. Der Webserver muss über eine IP-Adresse und eine spezifische Portnummer zugänglich sein.</span></p><p><span>Zur Überwachung des Apache-Servers wird das Runit-Überwachungstool verwendet. Runit ist ein einfaches, aber effektives Init-System, das hohe Verfügbarkeit und Zuverlässigkeit der Dienste gewährleistet. Der Apache-Server wird entsprechend den Anforderungen konfiguriert und angepasst. Ein wesentlicher Bestandteil des Projekts ist die sichere Integration von X.509-Zertifikaten zur Ermöglichung der verschlüsselten Kommunikation über SSL/TLS. Zudem wird die Protokollüberwachung berücksichtigt: Zugriffs- und Fehlerprotokolle werden gemäß den Anforderungen überwacht und rotiert.</span></p><ul>
+<li>
+<p><strong><span>Hardware</span></strong><span>:</span></p>
+<ul>
+<li><span>Prozessor: Intel Core i3 oder vergleichbar</span></li>
+<li><span>RAM: 512 MB bis 1 GB</span></li>
+<li><span>Festplatte: &gt; 1 GB</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Software</span></strong><span>:</span></p>
+<ul>
+<li><span>Betriebssystem: Linux, Unix, Windows</span></li>
+<li><span>Berechtigungen: Root und Administrator Rechte</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Netzwerk</span></strong><span>:</span></p>
+<ul>
+<li><span>Ports: Port 80 und 443 in der Firewall geöffnet</span></li>
+<li><span>IP-Addresse für das Aufrufen der Seite</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Sicherheit</span></strong><span>:</span></p>
+<ul>
+<li><span>Zertifikat: ECC – Elliptic Curve Cryptography</span></li>
+</ul>
+</li>
+</ul><h2 id="Ausgangslage-Betriebssystem" data-id="Ausgangslage-Betriebssystem"><a class="anchor hidden-xs" href="#Ausgangslage-Betriebssystem" title="Ausgangslage-Betriebssystem"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Ausgangslage, Betriebssystem</span></h2><p><span>Die Universität stellt uns die benötigte Hardware und Software zur Verfügung. Zudem wird ein SSL-Zertifikat bereitgestellt, um die Sicherheit der Datenübertragung zu gewährleisten. Die Berechtigungen für die Durchführung aller notwendigen Konfigurationen sind bereits erteilt.</span></p><ul>
+<li>
+<p><strong><span>Hardware</span></strong><span>:</span></p>
+<ul>
+<li><span>Pozessor: ausreichend</span></li>
+<li><span>RAM: ausreichend</span></li>
+<li><span>Festplatte: ausreichend</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Software</span></strong><span>:</span></p>
+<ul>
+<li><span>Betriebssystem: Debian</span></li>
+<li><span>Berechtigungen: Erteilt</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Netzwerk</span></strong><span>:</span></p>
+<ul>
+<li><span>Ports: Port 80 und Port 443 verfügbar</span></li>
+<li><span>IP-Addresse: local address 127.0.0.1</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Zertifikat</span></strong><span>:</span></p>
+<ul>
+<li><span>Zertifikat: liegen online bereit</span></li>
+</ul>
+</li>
+</ul><h2 id="Aufsetzen-des-Webservers-unter-SystemD" data-id="Aufsetzen-des-Webservers-unter-SystemD"><a class="anchor hidden-xs" href="#Aufsetzen-des-Webservers-unter-SystemD" title="Aufsetzen-des-Webservers-unter-SystemD"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Aufsetzen des Webservers unter SystemD</span></h2><p><span>Um unseren Apache-Server einzurichten, beginnen wir zunächst mit der Erlangung der erforderlichen Superuser-Rechte durch den Befehl sudo su. Nach dem Aktualisieren der Paketliste mit apt update installieren wir den Apache-Webserver mit apt install apache2. Um sicherzustellen, dass der Server korrekt läuft, überprüfen wir den Status mit systemctl status apache2.</span></p><p><span>Anschließend bearbeiten wir die Systemd-Konfigurationsdatei für Apache, indem wir die Datei /etc/systemd/system/multi-user.target.wants/apache2.service mit einem Texteditor wie vi öffnen. Hier können wir den PreExecStart-Eintrag nutzen, um zusätzliche Skripte vor dem Start von Apache auszuführen.</span></p><p><span>Im nächsten Schritt navigieren wir zu den Konfigurationsdateien für die Websites. Wir kopieren die Standardkonfigurationsdatei 000-default.conf aus dem Verzeichnis /etc/apache2/sites-enabled und benennen sie in jonzey.conf um. Danach erstellen wir einen symbolischen Link von jonzey.conf im Verzeichnis /etc/apache2/sites-available. Zur weiteren Konfiguration erstellen wir ein Verzeichnis /var/www/jonzey und platzieren dort eine index.html-Datei.</span></p><p><span>Wir bearbeiten dann die /etc/hosts-Datei und fügen notwendige Hostnamen hinzu. Um SSL-Zertifikate zu erstellen, richten wir das Verzeichnis /etc/apache2/ssl ein und erstellen die Skripte make_CA.sh, rootCA_ECC.cfg, hostname_ECC.cfg und make_server.sh. Nach dem Setzen der Ausführungsrechte für die Skripte führen wir make_CA.sh und make_server.sh aus, um die Zertifikate zu generieren. Anschließend aktivieren wir die SSL-Module durch das Erstellen von symbolischen Links zu ssl.conf und ssl.load im Verzeichnis mods-enabled.</span></p><p><span>Um die Caching-Funktion zu deaktivieren, passen wir die Konfigurationsdateien an. Danach installieren wir das Webalizer-Tool mit apt install webalizer. Für die Installation von Webalizer aus einer externen Quelle, führen wir scp aus, um die Datei webalizer_2.23.08-3.3_amd64.deb herunterzuladen. Wir ändern die Besitz- und Zugriffsrechte der Datei, bevor wir sie mit dpkg -i installieren.</span></p><p><span>Abschließend passen wir die Berechtigungen der Logs im Verzeichnis /var/log/apache2 an und konfigurieren Webalizer. Wir überprüfen die Webalizer-Version und bearbeiten die Konfigurationsdatei webalizer.conf. Für die Authentifizierung richten wir eine .htpasswd-Datei ein, in der wir Benutzer mit htpasswd hinzufügen.</span></p><p><span>Durch diese Schritte haben wir unseren Apache-Server erfolgreich konfiguriert und für den Einsatz bereitgestellt.</span></p><details>
+<summary>Schrittweise Anleitung</summary>
+<ol style="padding-left: 2em;">
+<li><span>sudo su</span></li>
+<li><span>apt update</span></li>
+<li><span>apt install apache2</span></li>
+</ol>
+<blockquote>
+<p><span>systemctl status apache2</span></p>
+</blockquote>
+<ol start="4" style="padding-left: 2em;">
+<li><span>vi /etc/systemd/system/multi-user.target.wants/</span><a href="#apache2-service"><span>apache2.service</span></a></li>
+</ol>
+<blockquote>
+<p><span>PreExecStart kann Scripte ausführen</span></p>
+</blockquote>
+<ol start="5" style="padding-left: 2em;">
+<li><span>cd /etc/apache2</span></li>
+<li><span>cd sites-enabled</span></li>
+<li><span>cp 000-default.conf </span><a href="#jonzey-conf"><span>jonzey.conf</span></a></li>
+<li><span>cd sites-available</span></li>
+<li><span>ln -s ../sites-enabled/jonzey.conf .</span></li>
+<li><span>cd /var/www/</span></li>
+<li><span>mkdir jonzey</span></li>
+</ol>
+<blockquote>
+<p><span>index.html erstellen oder kopieren</span></p>
+</blockquote>
+<ol start="12" style="padding-left: 2em;">
+<li><span>cd /etc</span></li>
+<li><span>vi </span><a href="#hosts"><span>hosts</span></a></li>
+<li><span>cd /etc/apache2</span></li>
+<li><span>mkdir ssl</span></li>
+<li><span>vi </span><a href="#make_CA-sh"><span>make_CA.sh</span></a></li>
+<li><span>vi </span><a href="#rootCA_ECC-cfg"><span>rootCA_ECC.cfg</span></a></li>
+<li><span>chmod +x make_CA.sh</span></li>
+<li><span>./make_CA.sh</span></li>
+<li><span>vi </span><a href="#%60hostname%60_ECC-cfg"><code>hostname</code><span>_ECC.cfg</span></a></li>
+<li><span>vi </span><a href="#make_server-sh"><span>make_server.sh</span></a></li>
+<li><span>chmod +x make_server.sh</span></li>
+<li><span>./make_server.sh</span></li>
+<li><span>cd mods-enabled</span></li>
+<li><span>ln -s ../mods-available/ssl.conf .</span></li>
+<li><span>ln -s ../mods-available/ssl.load .</span></li>
+<li><span>cd mods-available</span></li>
+<li><span>vi ssl.conf</span></li>
+</ol>
+<blockquote>
+<p><span>Cache deaktivieren</span></p>
+</blockquote>
+<ol start="29" style="padding-left: 2em;">
+<li><span>apt install webalizer</span></li>
+</ol>
+<blockquote>
+<p><strong><span>Hinweis:</span></strong><br>
+<span>sudo apt-get update</span><br>
+<span>sudo apt-get install openssh-server</span><br>
+<span>sudo ufw allow 22</span></p>
+</blockquote>
+<ol start="30" style="padding-left: 2em;">
+<li><a href="https://mirror.cov.ukservers.com/ubuntu/ubuntu/pool/universe/w/webalizer/" target="_blank" rel="noopener"><span>download webalizer extern</span></a></li>
+<li><span>scp labor@DESKTOP-9LI3O79:/var/www/webalizer_2.23.08-3.3_amd64.deb .</span></li>
+<li><span>chown labor:labor webalizer_2.23.08-3.3_amd64.deb</span></li>
+<li><span>chmod +x webalizer_2.23.08-3.3_amd64.deb</span></li>
+<li><span>dpkg -i webalizer_2.23.08-3.3_amd64.deb</span></li>
+</ol>
+<blockquote>
+<p><span>/var/log/apache2/ die log Berechtigungen ändern</span></p>
+</blockquote>
+<ol start="35" style="padding-left: 2em;">
+<li><span>webalizer -v</span></li>
+<li><span>cd /etc/webalizer</span></li>
+<li><span>vi </span><a href="#webalizer-conf"><span>webalizer.conf</span></a></li>
+<li><span>cd /etc/apache2/sites-enabled</span></li>
+<li><span>vi .htaccess</span></li>
+<li><span>htpasswd -c /etc/apache2/.htpasswd labor</span></li>
+<li><span>htpasswd -c /etc/apache2/.htpasswd2 test</span></li>
+</ol>
+</details><h2 id="Zusaetzliche-Software" data-id="Zusaetzliche-Software"><a class="anchor hidden-xs" href="#Zusaetzliche-Software" title="Zusaetzliche-Software"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Zusaetzliche Software</span></h2><h3 id="BSD-und-FreeBSD-erklärt" data-id="BSD-und-FreeBSD-erklärt"><a class="anchor hidden-xs" href="#BSD-und-FreeBSD-erklärt" title="BSD-und-FreeBSD-erklärt"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>BSD und FreeBSD erklärt:</span></h3><p><span>BSD steht für Berkeley Software Distribution, eine Unix-basierte Betriebssystemfamilie, die ursprünglich an der University of California, Berkeley, entwickelt wurde. Diese Systeme sind bekannt für ihre Stabilität, Sicherheitsfeatures und effiziente Netzwerk- und Dateisystem-Implementierungen. Die BSD-Architektur hat sich in mehrere Varianten und Ableger aufgespalten, darunter FreeBSD, OpenBSD und NetBSD, die jeweils unterschiedliche Schwerpunkte und Stärken haben.</span></p><p><span>FreeBSD ist eine freie und quelloffene Distribution innerhalb dieser Familie, die sich durch ihre Robustheit, hohe Leistung und umfassende Dokumentation auszeichnet. FreeBSD bietet ein klar strukturiertes, Unix-ähnliches System, das sich für eine Vielzahl von Einsatzszenarien, von Servern bis zu Desktops und eingebetteten Systemen, eignet. Die modulare Architektur von FreeBSD ermöglicht eine hohe Anpassungsfähigkeit und Flexibilität, und das System profitiert von einer aktiven Community, die kontinuierlich zur Weiterentwicklung und Verbesserung beiträgt.</span></p><h3 id="Weitere-SW-Werkzeuge" data-id="Weitere-SW-Werkzeuge"><a class="anchor hidden-xs" href="#Weitere-SW-Werkzeuge" title="Weitere-SW-Werkzeuge"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Weitere SW-Werkzeuge:</span></h3><p><span>Um die Funktionalität von FreeBSD zu erweitern, gibt es eine Vielzahl von Software-Werkzeugen, die zusätzlich installiert werden können. Diese Werkzeuge umfassen sowohl grundlegende Systemhilfsmittel als auch spezialisierte Anwendungen, die die Nutzung und Verwaltung des Systems erleichtern. Hier sind einige der wichtigsten zusätzlich zu installierenden Software-Werkzeuge für FreeBSD:</span></p><ul>
+<li>
+<p><span>pkg: Das Paketverwaltungssystem von FreeBSD, das eine einfache Installation und Verwaltung von vorgefertigten Binärpaketen ermöglicht.</span></p>
+</li>
+<li>
+<p><span>sudo: Ein Werkzeug, das es Nutzern erlaubt, bestimmte Befehle mit erhöhten Rechten auszuführen, ohne sich als root-Benutzer anmelden zu müssen.</span></p>
+</li>
+<li>
+<p><span>bash: Eine alternative Shell zu der standardmäßig installierten csh oder sh, die viele Nutzerfreundliche Features und eine bessere Kompatibilität zu Skripten bietet.</span></p>
+</li>
+<li>
+<p><span>vi oder nano: Erweiterte Texteditoren für die Bearbeitung von Konfigurationsdateien und Skripten.</span></p>
+</li>
+<li>
+<p><span>git: Ein verteiltes Versionskontrollsystem, das für die Verwaltung von Quellcode und die Zusammenarbeit an Softwareprojekten nützlich ist.</span></p>
+</li>
+<li>
+<p><span>curl: Werkzeuge zum Herunterladen von Dateien aus dem Internet und zum Testen von HTTP/HTTPS Seiten.</span></p>
+</li>
+<li>
+<p><span>apache: Webserver-Software zur Bereitstellung und Verwaltung von Websites und Webanwendungen.</span></p>
+</li>
+<li>
+<p><span>ssh: OpenSSH für sichere Verbindungen zu entfernten Servern und das Management von Netzwerkverbindungen.</span></p>
+</li>
+</ul><p><span>Diese Werkzeuge sind über das Ports-System oder die Paketverwaltung von FreeBSD verfügbar und können je nach Bedarf installiert und konfiguriert werden, um die Funktionalität des Systems zu erweitern und anzupassen.</span></p><h2 id="Einbettung-in-das-gegebene-System" data-id="Einbettung-in-das-gegebene-System"><a class="anchor hidden-xs" href="#Einbettung-in-das-gegebene-System" title="Einbettung-in-das-gegebene-System"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Einbettung in das gegebene System</span></h2><p><strong><span>Virtual Hosts:</span></strong></p><p><span>Virtual Hosts ermöglichen es, mehrere Websites auf einem einzigen Apache2-Server zu hosten. Dies wird durch die Konfiguration von „virtuellen Hosts“ erreicht, die Apache2 anweisen, verschiedene Anfragen auf Basis von Domainnamen oder IP-Adressen auf unterschiedliche Verzeichnisse oder Websites umzuleiten.</span></p><p><span>Konfiguration: Die Konfiguration erfolgt typischerweise in den Dateien httpd.conf oder in speziellen Dateien innerhalb des Verzeichnisses </span><code>/etc/apache2/sites-available/</code><span>. Jede virtuelle Host-Konfiguration definiert, welche Domain oder IP-Adresse auf welches Verzeichnis auf dem Server zeigt und wie Anfragen für diese Domain behandelt werden sollen.</span></p><p><strong><span>Sicherheit und Leistungseinstellungen:</span></strong></p><p><span>Die Sicherheit und Leistung von Apache2 können durch verschiedene Konfigurationen optimiert werden. Diese Einstellungen beeinflussen, wie sicher und effizient der Webserver läuft.</span></p><ul>
+<li><strong><span>SSL/TLS:</span></strong><span> Durch das Einrichten von SSL/TLS (z.B. mit mod_ssl) wird die Kommunikation zwischen dem Server und den Clients verschlüsselt, was die Datensicherheit erhöht.</span></li>
+<li><strong><span>Zugriffssteuerung:</span></strong><span> Durch die Konfiguration von .htaccess-Dateien oder in der Hauptkonfigurationsdatei können Sie Zugriffsrechte steuern und sicherstellen, dass nur autorisierte Benutzer auf bestimmte Bereiche Ihrer Website zugreifen können.</span></li>
+</ul><h2 id="Komponenten-Interaktion" data-id="Komponenten-Interaktion"><a class="anchor hidden-xs" href="#Komponenten-Interaktion" title="Komponenten-Interaktion"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Komponenten Interaktion</span></h2><p><strong><span>Kern und Module:</span></strong></p><p><span>Apache2 besteht aus einem zentralen Server-Kern und zahlreichen Modulen (z.B. mod_ssl, mod_rewrite), die die Funktionalität erweitern. Diese Module werden in die Hauptkonfiguration integriert und beeinflussen, wie Anfragen verarbeitet werden.</span><br>
+<span>Konfiguration: Die Konfiguration erfolgt durch Dateien wie httpd.conf und apache2.conf, die festlegen, wie der Server und seine Module zusammenarbeiten. Die MPMs (Multi-Processing Modules) bestimmen, wie Anfragen durch Prozesse oder Threads bearbeitet werden.</span></p><p><strong><span>Managebarkeit:</span></strong></p><ul>
+<li><span>Konfigurationsverwaltung: Apache2-Konfigurationen werden über Dateien und Befehle wie apachectl oder systemctl verwaltet. Regelmäßige Tests und Anpassungen sind notwendig.</span></li>
+<li><span>Logs und Monitoring: Apache2 generiert Log-Dateien (access.log, error.log) zur Überwachung und Fehlersuche. Monitoring-Tools und Log-Management helfen bei der Performance-Überwachung und beim Troubleshooting.</span></li>
+<li><span>Dienstverwaltung: Der Apache2-Dienst wird durch Systemverwaltungswerkzeuge wie systemctl oder init.d gesteuert.</span></li>
+</ul><blockquote>
+<p><code>init.d</code><span> ist ein Verzeichnis, das in Unix- und Linux-Systemen verwendet wird, um Start- und Stopp-Skripte für Systemdienste und Daemons zu speichern.</span></p>
+</blockquote><p><strong><span>Wiederanlauf im Fehlerfall:</span></strong></p><ul>
+<li><span>Automatische Neustarts: systemd kann so konfiguriert werden, dass es Apache2 bei einem Ausfall automatisch neu startet.</span></li>
+<li><span>Fehlerbehebung und Backup: Log-Dateien und Konfigurationsprüfungen helfen bei der Fehlersuche. Regelmäßige Backups der Konfigurationen sichern eine schnelle Wiederherstellung im Notfall.</span></li>
+</ul><h2 id="Anpassung-der-Skripte" data-id="Anpassung-der-Skripte"><a class="anchor hidden-xs" href="#Anpassung-der-Skripte" title="Anpassung-der-Skripte"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Anpassung der Skripte</span></h2><h3 id="Konfigurationsdateien" data-id="Konfigurationsdateien"><a class="anchor hidden-xs" href="#Konfigurationsdateien" title="Konfigurationsdateien"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Konfigurationsdateien</span></h3><h4 id="apache2-service" data-id="apache2-service"><a class="anchor hidden-xs" href="#apache2-service" title="apache2-service"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>apache2-service</span></h4><details open="">
+<summary>Code anzeigen!</summary>
+<pre><code>[Unit]
+Description=The Apache HTTP Server****
+After=network.target remote-fs.target nss-lookup.target
+Documentation=https://httpd.apache.org/docs/2.4/
+
+[Service]
+unset HOME
+Environment=APACHE_RUN_USER=www-data
+Environment=APACHE_RUN_GROUP=www-data
+Environment=APACHE_PID_FILE=/var/run/apache2/apache2.pid
+Environment=APACHE_RUN_DIR=/var/run/apache2
+Environment=APACHE_LOCK_DIR=/var/lock/apache2
+Environment=APACHE_LOG_DIR=/var/log/apache2
+Environment=LANG=C
+
+Type=forking
+ExecStartPre=/bin/mkdir -p /var/run/apache2
+ExecStartPre=/bin/chown www-data:www-data /var/run/apache2
+
+ExecStart=/sbin/apache2 -k start
+ExecStop=/sbin/apache2 -k graceful-stop
+ExecReload=/sbin/apache2 -k graceful
+KillMode=mixed
+PrivateTmp=true
+Restart=always
+OOMPolicy=continue
+</code></pre>
+</details><p><span>Enivronment Variablen aus /etc/apache2/envvars in die Datei überführt und ExecStartPre ergänzt. Restart auf always setzen und Pfade anpassen. Die Ergänzung von graceful sorgt dafür das beim Stopp bereits bestehende Verbindungen aufrecht erhalten werden.</span></p><h4 id="jonzey-conf" data-id="jonzey-conf"><a class="anchor hidden-xs" href="#jonzey-conf" title="jonzey-conf"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>jonzey-conf</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>&lt;VirtualHost *:80&gt;
+
+	ServerName jonzey.com
+	ServerAlias www.jonzey.com jonzey.de
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/jonzey
+	LogLevel debug
+    
+	ErrorLog /var/log/apache2/error.log
+	CustomLog /var/log/apache2/access.log common
+    
+	&lt;Directory /var/www/jonzey &gt;
+	    Options FollowSymLinks
+	    AllowOverride All
+	    Require all granted
+	&lt;/Directory&gt;
+    
+	DirectoryIndex index.html
+    
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/jonzey
+        ServerName www.jonzey.com
+        ServerAlias jonzey.de
+    
+        SSLEngine on
+        SSLCertificateFile /root/x509/DESKTOP-9LI3O79_ECCert.pem
+        SSLCertificatekeyFile /root/x509/DESKTOP-9LI3O79_ECCkey.pem
+    
+        &lt;Directory /var/www/jonzey &gt;
+            Options FollowSymLinks
+            AllowOverride All
+            Require all granted
+        &lt;/Directory&gt;
+    
+        ErrorLog /var/log/apache2/error.log
+        CustomLog /var/log/apache2/access.log common
+    
+    DirectoryIndex index.html
+    
+&lt;/VirtualHost&gt;
+</code></pre>
+</details><p><span>Der Servername sowie Aliase wurden angepasst. Ebenso die Pfade zu unserer html Seite. Auch wurden die Pfade zu den Logs angepasst. In der Directory wurde neben dem Pfad die Befehele </span><code>AllowOverride All</code><span> sowie </span><code>Require all granted</code><span> hinzugefügt um einen reibungslosen Ablauf mit </span><code>.htaccess</code><span> zu ermöglichen. Im Virtualhost mit dem Port 443 wurden ebenso Zeilen für SSL hinzugefügt, die für die Zertifikate notwendig sind.</span></p><h4 class="raw"><span>hosts</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>127.0.0.1       localhost
+127.0.1.1       DESKTOP-9LI3O79.        DESKTOP-9LI3O79
+127.0.0.2       jonzey.com
+</code></pre>
+</details><p><span>Unsere eigene Domain wird auf eine lokale Adresse aufgelöst.</span></p><h3 class="raw"><span>Skripte und Zertifikatsverwaltung</span></h3><h4 class="raw"><span>make_CA-sh</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>KEY="rootCA_ECCkey.pem"
+CERT="rootCA_ECCert.pem"
+TYPE="prime256v1"
+CONFIG="rootCA_ECC.cfg"
+echo "Generating Root CA:"
+openssl ecparam -genkey -name ${TYPE} -out ${KEY}
+openssl req -new -key ${KEY} -config ${CONFIG} -extensions v3_ca -out ${CERT}.csr
+openssl req -x509 -days 3680 -key ${KEY} -in ${CERT}.csr -out ${CERT} \
+-copy_extensions=copyall
+</code></pre>
+</details><p><span>Es wurde </span><code>copy_extensions=copyall</code><span> hinzugefügt um alle Erweiterungen des Quellzertifikats zu übernehmen.</span></p><h4 class="raw"><span>make_server-sh</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>HOST=DESKTOP-9LI3O79
+KEY="${HOST}_ECCkey.pem"
+CERT="${HOST}_ECCert.pem"
+TYPE="prime256v1"
+CONFIG="${HOST}_ECC.cfg"
+echo "Generating Cert for ${HOST}:"
+openssl ecparam -genkey -name ${TYPE} -out ${KEY}
+openssl req -new -key ${KEY} -out ${HOST}.csr -config ${CONFIG}
+openssl req -x509 -pkeyopt ec_paramgen_curve:${TYPE} -nodes -days 365 \
+-in ${HOST}.csr -out ${CERT} -config ${CONFIG} -extensions x509v3 -key ${KEY} \
+-copy_extensions=copyall
+</code></pre>
+</details><p><span>Ebenfalls </span><code>copy_extensions=copyall</code><span> hinzugefügt um alle Erweiterungen des Quellzertifikats zu übernehmen.</span></p><h4 class="raw"><span>rootCA_ECC-cfg</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>[ req ]
+ts = 1024
+distinguished_name = req_DN
+string_mask = nombstr
+[ req_DN ]
+countryName = "1. Country Name (2 letter code)"
+countryName_default = DE
+countryName_min = 2
+countryName_max = 2
+stateOrProvinceName = "2. State or Province Name (full name) "
+stateOrProvinceName_default = Hessen
+localityName = "3. Locality Name (eg, city) "
+localityName_default = Hanau
+0.organizationName = "4. Organization Name (eg, company) "
+0.organizationName_default = Jonzey
+organizationalUnitName = "5. Organizational Unit Name (eg, section) "
+organizationalUnitName_default =
+commonName = "6. Common Name (eg, CA name) "
+commonName_max = 64
+commonName_default = Frankfurt University of Applied Sciences
+emailAddress = "7. Email Address (eg, name@FQDN)"
+emailAddress_max = 40
+emailAddress_default = medi.edi@gmx.de
+[ v3_ca ]
+basicConstraints = critical,CA:TRUE,pathlen:3
+keyUsage = keyCertSign,cRLSign
+subjectKeyIdentifier = hash
+authorityKeyIdentifier= keyid:always,issuer:always
+</code></pre>
+</details><p><span>Hier werden Daten über uns eingefügt.</span></p><h4 class="raw"><code>hostname</code><span>_ECC-cfg</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>[ req ]
+distinguished_name = req_DN
+string_mask = nombstr
+[ req_DN ]
+countryName = "1. Country Name (2 letter code)"
+countryName_default = DE
+countryName_min = 2
+countryName_max = 2
+stateOrProvinceName = "2. State or Province Name (full name) "
+stateOrProvinceName_default = Hessen
+localityName = "3. Locality Name (eg, city) "
+localityName_default = Hanau
+0.organizationName = "4. Organization Name (eg, company) "
+0.organizationName_default = Frankfurt University of Applied Sciences
+organizationalUnitName = "5. Organizational Unit Name (eg, section) "
+organizationalUnitName_default =
+commonName = "6. Common Name (eg, CA name) "
+commonName_max = 64
+commonName_default = Jonzey
+emailAddress = "7. Email Address (eg, name@FQDN)"
+emailAddress_max = 40
+emailAddress_default = medi.edi@gmx.de
+#X509v3SubjectAlternativeName = medusa.fehnet.de
+[ x509v3 ]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature,nonRepudiation
+extendedKeyUsage = clientAuth
+authorityKeyIdentifier=issuer
+</code></pre>
+</details><p><span>Hier wird festgelegt welche Daten über uns eingegeben werden und weitere Limitierungen dieser.</span></p><h4 class="raw"><span>webalizer-conf</span></h4><details>
+<summary>Code anzeigen!</summary>
+<pre><code>LogFile /var/log/apache2/access.log
+OutputDir /var/www/jonzey/
+ReportTitle Usage statistics for
+HostName DESKTOP-9LI3O79
+PageType        htm*
+PageType        cgi
+PageType        php3
+PageType        php
+HideURL         *.gif
+HideURL         *.GIF
+HideURL         *.jpg
+HideURL         *.JPG
+HideURL         *.png
+HideURL         *.PNG
+HideURL         *.ra
+IgnoreSite      localhost
+IgnoreReferrer  localhost
+SearchEngine    .google.        q=
+SearchEngine    yahoo.com       p=
+SearchEngine    altavista.com   q=
+SearchEngine    aolsearch.      query=
+SearchEngine    ask.co          q=
+SearchEngine    eureka.com      q=
+SearchEngine    lycos.com       query=
+SearchEngine    hotbot.com      MT=
+SearchEngine    msn.com         q=
+SearchEngine    infoseek.com    qt=
+SearchEngine    excite          search=
+SearchEngine    netscape.com    query=
+SearchEngine    mamma.com       query=
+SearchEngine    alltheweb.com   q=
+SearchEngine    northernlight.com  qr=
+SearchEngine    sensis.com.au   find=
+</code></pre>
+</details><p><span>Log und OutputDirectory wurden festgelegt.</span></p><h2 class="raw"><span>Beschreibung der Prozesskette</span></h2><ol style="padding-left: 2em;">
+<li><span>Netzwerk-Stack: Der Apache2-Server empfängt HTTP(S)-Anfragen über Port 80 oder 443.</span></li>
+<li><span>MPM (Multi-Processing Module): Bestimmt, wie Anfragen verarbeitet werden (Prozesse und Threads).</span></li>
+<li><span>Apache2-Kern: Verarbeitet die Anfrage und die grundlegende Serverlogik.</span></li>
+<li><span>Apache2-Module: Erweitern die Funktionalität von Apache2, z.B. für SSL/TLS, URL-Umschreibung, Proxy-Dienste.</span></li>
+<li><span>Virtuelle Hosts: Verwalten mehrere Websites auf einem Server.</span></li>
+<li><span>Dateisystem/DocumentRoot: Liefert die angeforderten Dateien.</span></li>
+<li><span>.htaccess-Dateien: Bieten zusätzliche Konfigurationen und Zugriffssteuerungen für spezifische Verzeichnisse.</span></li>
+</ol><h2 class="raw"><span>Erläuterung der httpd.conf Datei</span></h2><p><span>&lt;VirtualHost *:80&gt;</span><br>
+<span>ServerName </span><a href="http://www.jonzey.de" target="_blank" rel="noopener"><span>www.jonzey.de</span></a></p><blockquote>
+<p><span>Setzt den Namen des virtuellen Hosts, der für Anfragen auf Port 80 verwendet wird.</span></p>
+</blockquote><p><span>ServerAdmin webmaster@localhost</span></p><blockquote>
+<p><span>E-Mail-Adresse des Serveradministrators.</span></p>
+</blockquote><p><span>DocumentRoot /var/www/jonzey/</span></p><blockquote>
+<p><span>Verzeichnis, aus dem die Dateien für diesen virtuellen Host bereitgestellt werden.</span></p>
+</blockquote><p><span>ServerAlias </span><a href="http://jonzey.de" target="_blank" rel="noopener"><span>jonzey.de</span></a></p><blockquote>
+<p><span>Weitere Namen, unter denen dieser virtuelle Host erreichbar ist.</span></p>
+</blockquote><p><span>LogLevel warn</span></p><blockquote>
+<p><span>Legt das Log-Level fest. Hier werden nur Warnungen und schwerwiegendere Meldungen protokolliert.</span></p>
+</blockquote><p><span>&lt;Directory /var/www/jonzey/ &gt;</span><br>
+<span>Options FollowSymLinks</span></p><blockquote>
+<p><span>Erlaubt das Verfolgen von symbolischen Links im angegebenen Verzeichnis.</span></p>
+</blockquote><p><span>AllowOverride All</span></p><blockquote>
+<p><span>Erlaubt das Überschreiben von Konfigurationen durch .htaccess-Dateien.</span></p>
+</blockquote><p><span>Require all granted</span></p><blockquote>
+<p><span>Erlaubt den Zugriff auf das Verzeichnis für alle Anfragen.</span></p>
+</blockquote><p><span>ErrorLog /var/log/apache2/error.log</span></p><blockquote>
+<p><span>Speicherort der Fehlerprotokolldatei.</span></p>
+</blockquote><p><span>CustomLog /var/log/apache2/access.log combined</span></p><blockquote>
+<p><span>Speicherort der Zugriffsprotokolldatei und das Format der Protokollierung.</span></p>
+</blockquote><p><span>DirectoryIndex index.html</span></p><blockquote>
+<p><span>Die Standarddatei, die beim Zugriff auf ein Verzeichnis angezeigt wird.</span></p>
+</blockquote><p><span>&lt;VirtualHost *:443&gt;</span><br>
+<span>ServerAdmin webmaster@localhost</span></p><blockquote>
+<p><span>E-Mail-Adresse des Serveradministrators.</span></p>
+</blockquote><p><span>DocumentRoot /var/www/jonzey</span></p><blockquote>
+<p><span>Verzeichnis, aus dem die Dateien für diesen virtuellen Host bereitgestellt werden.</span></p>
+</blockquote><p><span>ServerName </span><a href="http://www.jonzey.de" target="_blank" rel="noopener"><span>www.jonzey.de</span></a></p><blockquote>
+<p><span>Setzt den Namen des virtuellen Hosts, der für Anfragen auf Port 443 (HTTPS) verwendet wird.</span></p>
+</blockquote><p><span>ServerAlias </span><a href="http://jonzey.de" target="_blank" rel="noopener"><span>jonzey.de</span></a></p><blockquote>
+<p><span>Weitere Namen, unter denen dieser virtuelle Host erreichbar ist.</span></p>
+</blockquote><p><span>LogLevel warn</span></p><blockquote>
+<p><span>Legt das Log-Level fest. Hier werden nur Warnungen und schwerwiegendere Meldungen protokolliert.</span></p>
+</blockquote><p><span>SSLEngine on</span></p><blockquote>
+<p><span>Aktiviert SSL/TLS für diesen virtuellen Host.</span></p>
+</blockquote><p><span>SSLCertificateFile /etc/apache2/ssl/DESKTOP-9LI3O79_ECCert.pem</span></p><blockquote>
+<p><span>Pfad zur Datei des SSL-Zertifikats.</span></p>
+</blockquote><p><span>SSLCertificateKeyFile /etc/apache2/ssl/DESKTOP-9LI3O79_ECCkey.pem</span></p><blockquote>
+<p><span>Pfad zur Datei des privaten Schlüssels für das SSL-Zertifikat.</span></p>
+</blockquote><p><span>&lt;Directory /var/www/jonzey/ &gt;</span><br>
+<span>Options FollowSymLinks</span></p><blockquote>
+<p><span>Erlaubt das Verfolgen von symbolischen Links im angegebenen Verzeichnis.</span></p>
+</blockquote><p><span>AllowOverride All</span></p><blockquote>
+<p><span>Erlaubt das Überschreiben von Konfigurationen durch .htaccess-Dateien.</span></p>
+</blockquote><p><span>Require all granted</span></p><blockquote>
+<p><span>Erlaubt den Zugriff auf das Verzeichnis für alle Anfragen.</span></p>
+</blockquote><p><span>ErrorLog /var/log/apache2/error.log</span></p><blockquote>
+<p><span>Speicherort der Fehlerprotokolldatei.</span></p>
+</blockquote><p><span>CustomLog /var/log/apache2/access.log common</span></p><blockquote>
+<p><span>Speicherort der Zugriffsprotokolldatei und das Format der Protokollierung.</span></p>
+</blockquote><p><span>DirectoryIndex index.html</span></p><blockquote>
+<p><span>Die Standarddatei, die beim Zugriff auf ein Verzeichnis angezeigt wird.</span></p>
+</blockquote><h2 class="raw"><span>Beschreibung des DocumentRoot</span></h2><p><span>DocumentRoot ist die Direktive in der Apache-Konfigurationsdatei (httpd.conf, apache2.conf oder in spezifischen VirtualHost-Konfigurationen), die das Verzeichnis angibt, aus dem Apache die Dateien für HTTP-Anfragen bereitstellt.</span><br>
+<code>DocumentRoot /var/www/jonzey</code></p><p><span>In der Konfiguration von virtuellen Hosts wird DocumentRoot verwendet, um das Stammverzeichnis für jede spezifische Website oder Anwendung zu definieren. Zum Beispiel:</span></p><pre><code>&lt;VirtualHost *:80&gt;
+    DocumentRoot /var/www/jonzey
+    ServerName www.jonzey.com
+&lt;/VirtualHost&gt;
+</code></pre><p><strong><span>Sicherheit:</span></strong></p><ul>
+<li><span>Das DocumentRoot-Verzeichnis sollte so konfiguriert sein, dass nur die notwendigen Dateien und Verzeichnisse für den Webzugriff verfügbar sind. Unnötige Dateien oder sensible Informationen sollten nicht in diesem Verzeichnis gespeichert werden.</span></li>
+<li><span>Berechtigungen sollten sorgfältig gesetzt werden, um unautorisierten Zugriff auf Dateien zu verhindern.</span></li>
+</ul><p><strong><span>Zugriffssteuerung:</span></strong></p><p><span>In der Apache-Konfiguration können spezifische Regeln für das DocumentRoot-Verzeichnis definiert werden, um den Zugriff zu steuern. Zum Beispiel:</span></p><pre><code>&lt;Directory /var/www/jonzey&gt;
+    AllowOverride None
+    Require all granted
+&lt;/Directory&gt;
+</code></pre><p><span>Hier wird der Zugriff auf /var/www/jonzey für alle Benutzer erlaubt und .htaccess-Dateien werden nicht beachtet.</span></p><h2 class="raw"><span>Zertifikate</span></h2><pre><code>SSLEngine on
+SSLCertificateFile /etc/apache2/ssl/DESKTOP-9LI3O79_ECCert.pem
+SSLCertificatekeyFile /etc/apache2/ssl/DESKTOP-9LI3O79_ECCkey.pem
+</code></pre><ul>
+<li><span>X.509-Zertifikat: Ein digitales Zertifikat, das zur Verschlüsselung von Daten und zur Authentifizierung des Servers verwendet wird. Es enthält den öffentlichen Schlüssel des Servers und andere Identifikationsinformationen.</span></li>
+<li><span>Trustchain (oder Zertifikatskette): Eine Kette von Zertifikaten, die vom Serverzertifikat bis zu einer vertrauenswürdigen Root-Zertifizierungsstelle (CA) reicht. Die Trustchain stellt sicher, dass das Serverzertifikat von einer vertrauenswürdigen Quelle signiert.</span></li>
+</ul><p><strong><span>IfModule mod_ssl.c:</span></strong></p><blockquote>
+<p><span>Konfiguriert die Quellen für die Zufallszahlengenerierung (PRNG) für SSL.</span></p>
+</blockquote><p><span>SSLRandomSeed startup builtin</span></p><blockquote>
+<p><span>Verwendet </span><code>/dev/urandom</code><span> als zusätzliche Quelle für das Zufallszahlen-Seed beim Serverstart.</span></p>
+</blockquote><p><span>SSLRandomSeed startup file:/dev/urandom 512</span></p><blockquote>
+<p><span>Verwendet </span><code>/dev/urandom</code><span> als zusätzliche Quelle für das Zufallszahlen-Seed während der Verbindung.</span></p>
+</blockquote><p><span>SSLRandomSeed connect builtin</span></p><blockquote>
+<p><span>Verwendet </span><code>/dev/urandom</code><span> als zusätzliche Quelle für das Zufallszahlen-Seed bei Verbindungsaufbau.</span></p>
+</blockquote><p><span>SSLRandomSeed connect file:/dev/urandom 512</span></p><blockquote>
+<p><span>Definiert MIME-Typen für das Herunterladen von Zertifikaten und CRLs.</span></p>
+</blockquote><p><span>AddType application/x-x509-ca-cert .crt</span></p><blockquote>
+<p><span>Definiert den MIME-Typ für CA-Zertifikate.</span></p>
+</blockquote><p><span>AddType application/x-pkcs7-crl .crl</span></p><blockquote>
+<p><span>Definiert den MIME-Typ für CRLs (Certificate Revocation Lists).</span><br>
+<span>Konfiguriert das Dialogfeld zum Abfragen der Passphrase für private Schlüssel.</span></p>
+</blockquote><p><span>SSLPassPhraseDialog exec:/usr/share/apache2/ask-for-passphrase</span></p><blockquote>
+<p><span>Legt die Timeout-Dauer für den SSL-Session-Cache fest (in Sekunden).</span></p>
+</blockquote><p><span>SSLSessionCacheTimeout 300</span></p><blockquote>
+<p><span>Definiert die Cipher Suites, die für die SSL-Verbindung verwendet werden dürfen.</span></p>
+</blockquote><p><span>SSLCipherSuite HIGH:!aNULL</span></p><blockquote>
+<p><span>Erlaubt nur sichere Cipher-Suites und schließt anonyme Cipher-Suites aus.</span></p>
+</blockquote><p><span>SSLHonorCipherOrder on</span></p><blockquote>
+<p><span>Wenn aktiviert, bevorzugt der Server die konfigurierten Cipher-Suites über die vom Client bevorzugten.</span><br>
+<span>Definiert die unterstützten SSL/TLS-Protokolle.</span></p>
+</blockquote><p><span>SSLProtocol all -SSLv3</span></p><blockquote>
+<p><span>Aktiviert alle SSL/TLS-Protokolle außer SSLv3, das als unsicher gilt.</span><br>
+<span>SSLInsecureRenegotiation on</span><br>
+<span>SSLStrictSNIVHostCheck On</span><br>
+<span>Wenn aktiviert, wird der Zugriff verweigert, wenn SNI (Server Name Indication) nicht unterstützt wird.</span></p>
+</blockquote><h3 id="X509-Zertifikat" data-id="X509-Zertifikat"><a class="anchor hidden-xs" href="#X509-Zertifikat" title="X509-Zertifikat"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>X.509 Zertifikat</span></h3><p><span>X.509 ist ein Standard für digitale Zertifikate in der Public-Key-Infrastruktur (PKI). Er beschreibt das Format und die Struktur von Zertifikaten, die zur Identitätsbestätigung und für die Verschlüsselung verwendet werden. Wichtige Komponenten sind:</span></p><ul>
+<li><span>Zertifikatsinhaber (Subject): Die Person oder Entität, für die das - Zertifikat ausgestellt ist.</span></li>
+<li><span>Öffentlicher Schlüssel: Wird für die Verschlüsselung oder Signaturüberprüfung verwendet.</span></li>
+<li><span>Zertifizierungsstelle (CA): Vertrauenswürdige Entität, die das Zertifikat ausstellt und signiert.</span></li>
+<li><span>Gültigkeitszeitraum: Zeitspanne, in der das Zertifikat gültig ist.</span></li>
+<li><span>Signaturalgorithmus: Algorithmus zum Signieren des Zertifikats.</span></li>
+</ul><p><span>X.509-Zertifikate werden in SSL/TLS für sichere Webverbindungen, E-Mail-Verschlüsselung, digitale Signaturen und Authentifizierung verwendet.</span></p><h2 id="Monitoring-via-Webalizer" data-id="Monitoring-via-Webalizer"><a class="anchor hidden-xs" href="#Monitoring-via-Webalizer" title="Monitoring-via-Webalizer"><span class="octicon octicon-link ph ph-link-simple-horizontal"></span></a><span>Monitoring via Webalizer</span></h2><p><a href="https://www.jonzey.de/dokumentaion/webalizer.html" target="_blank" rel="noopener"><span>Link zum Webalizer.html</span></a></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li><a href="#Apache-2-Webserver-einrichten" title="Apache 2 Webserver einrichten">Apache 2 Webserver einrichten</a><ul class="nav">
+<li><a href="#Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz" title="Eine Anleitung von Jonathan Binder und Üzeyir Yilmaz">Eine Anleitung von Jonathan Binder und Üzeyir Yilmaz</a><ul class="nav">
+<li><a href="#Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024" title="Professor: Erwin Hoffman Informatik-Projekt SS 2024">Professor: Erwin Hoffman Informatik-Projekt SS 2024</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Inhaltsverzeichnis" title="Inhaltsverzeichnis">Inhaltsverzeichnis</a><ul class="nav">
+<li><a href="#Einführung" title="Einführung">Einführung</a></li>
+<li><a href="#Anforderungen" title="Anforderungen">Anforderungen</a></li>
+<li><a href="#Ausgangslage-Betriebssystem" title="Ausgangslage, Betriebssystem">Ausgangslage, Betriebssystem</a></li>
+<li><a href="#Aufsetzen-des-Webservers-unter-SystemD" title="Aufsetzen des Webservers unter SystemD">Aufsetzen des Webservers unter SystemD</a></li>
+<li><a href="#Zusaetzliche-Software" title="Zusaetzliche Software">Zusaetzliche Software</a><ul class="nav">
+<li><a href="#BSD-und-FreeBSD-erklärt" title="BSD und FreeBSD erklärt:">BSD und FreeBSD erklärt:</a></li>
+<li><a href="#Weitere-SW-Werkzeuge" title="Weitere SW-Werkzeuge:">Weitere SW-Werkzeuge:</a></li>
+</ul>
+</li>
+<li><a href="#Einbettung-in-das-gegebene-System" title="Einbettung in das gegebene System">Einbettung in das gegebene System</a></li>
+<li><a href="#Komponenten-Interaktion" title="Komponenten Interaktion">Komponenten Interaktion</a></li>
+<li><a href="#Anpassung-der-Skripte" title="Anpassung der Skripte">Anpassung der Skripte</a><ul class="nav">
+<li><a href="#Konfigurationsdateien" title="Konfigurationsdateien">Konfigurationsdateien</a></li>
+<li><a href="#Skripte-und-Zertifikatsverwaltung" title="Skripte und Zertifikatsverwaltung">Skripte und Zertifikatsverwaltung</a></li>
+</ul>
+</li>
+<li><a href="#Beschreibung-der-Prozesskette" title="Beschreibung der Prozesskette">Beschreibung der Prozesskette</a></li>
+<li><a href="#Erläuterung-der-httpdconf-Datei" title="Erläuterung der httpd.conf Datei">Erläuterung der httpd.conf Datei</a></li>
+<li><a href="#Beschreibung-des-DocumentRoot" title="Beschreibung des DocumentRoot">Beschreibung des DocumentRoot</a></li>
+<li><a href="#Zertifikate" title="Zertifikate">Zertifikate</a><ul class="nav">
+<li><a href="#X509-Zertifikat" title="X.509 Zertifikat">X.509 Zertifikat</a></li>
+</ul>
+</li>
+<li class=""><a href="#Monitoring-via-Webalizer" title="Monitoring via Webalizer">Monitoring via Webalizer</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;"  >
+        <div class="toc"><ul class="nav">
+<li><a href="#Apache-2-Webserver-einrichten" title="Apache 2 Webserver einrichten">Apache 2 Webserver einrichten</a><ul class="nav">
+<li><a href="#Eine-Anleitung-von-Jonathan-Binder-und-Üzeyir-Yilmaz" title="Eine Anleitung von Jonathan Binder und Üzeyir Yilmaz">Eine Anleitung von Jonathan Binder und Üzeyir Yilmaz</a><ul class="nav">
+<li><a href="#Professor-Erwin-Hoffman-Informatik-Projekt-SS-2024" title="Professor: Erwin Hoffman Informatik-Projekt SS 2024">Professor: Erwin Hoffman Informatik-Projekt SS 2024</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Inhaltsverzeichnis" title="Inhaltsverzeichnis">Inhaltsverzeichnis</a><ul class="nav">
+<li><a href="#Einführung" title="Einführung">Einführung</a></li>
+<li><a href="#Anforderungen" title="Anforderungen">Anforderungen</a></li>
+<li><a href="#Ausgangslage-Betriebssystem" title="Ausgangslage, Betriebssystem">Ausgangslage, Betriebssystem</a></li>
+<li><a href="#Aufsetzen-des-Webservers-unter-SystemD" title="Aufsetzen des Webservers unter SystemD">Aufsetzen des Webservers unter SystemD</a></li>
+<li><a href="#Zusaetzliche-Software" title="Zusaetzliche Software">Zusaetzliche Software</a><ul class="nav">
+<li><a href="#BSD-und-FreeBSD-erklärt" title="BSD und FreeBSD erklärt:">BSD und FreeBSD erklärt:</a></li>
+<li><a href="#Weitere-SW-Werkzeuge" title="Weitere SW-Werkzeuge:">Weitere SW-Werkzeuge:</a></li>
+</ul>
+</li>
+<li><a href="#Einbettung-in-das-gegebene-System" title="Einbettung in das gegebene System">Einbettung in das gegebene System</a></li>
+<li><a href="#Komponenten-Interaktion" title="Komponenten Interaktion">Komponenten Interaktion</a></li>
+<li><a href="#Anpassung-der-Skripte" title="Anpassung der Skripte">Anpassung der Skripte</a><ul class="nav">
+<li><a href="#Konfigurationsdateien" title="Konfigurationsdateien">Konfigurationsdateien</a></li>
+<li><a href="#Skripte-und-Zertifikatsverwaltung" title="Skripte und Zertifikatsverwaltung">Skripte und Zertifikatsverwaltung</a></li>
+</ul>
+</li>
+<li><a href="#Beschreibung-der-Prozesskette" title="Beschreibung der Prozesskette">Beschreibung der Prozesskette</a></li>
+<li><a href="#Erläuterung-der-httpdconf-Datei" title="Erläuterung der httpd.conf Datei">Erläuterung der httpd.conf Datei</a></li>
+<li><a href="#Beschreibung-des-DocumentRoot" title="Beschreibung des DocumentRoot">Beschreibung des DocumentRoot</a></li>
+<li><a href="#Zertifikate" title="Zertifikate">Zertifikate</a><ul class="nav">
+<li><a href="#X509-Zertifikat" title="X.509 Zertifikat">X.509 Zertifikat</a></li>
+</ul>
+</li>
+<li class=""><a href="#Monitoring-via-Webalizer" title="Monitoring via Webalizer">Monitoring via Webalizer</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
