@@ -1,11 +1,11 @@
 plate0: 10 results
-    - WOBTI500	 confidence: 86.7748
-    - WOBTI50D	 confidence: 84.8945
-    - W0BTI500	 confidence: 84.6781
-    - WOBTIS00	 confidence: 84.3888
-    - WO8TI500	 confidence: 84.2072
-    - W0BTI50D	 confidence: 82.7978
-    - WOBTIS0D	 confidence: 82.5084
-    - WO8TI50D	 confidence: 82.3269
-    - W0BTIS00	 confidence: 82.292
-    - W08TI500	 confidence: 82.1104
+    - W0B500	 confidence: 82.3666
+    - WB500	 confidence: 81.9615
+    - WGB500	 confidence: 79.504
+    - 0B500	 confidence: 79.2382
+    - WOB500	 confidence: 79.0762
+    - W0B5D0	 confidence: 79.0155
+    - WB5D0	 confidence: 78.6104
+    - W0500	 confidence: 78.0705
+    - WDB500	 confidence: 77.7772
+    - WQB500	 confidence: 77.6418
