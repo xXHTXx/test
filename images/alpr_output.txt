@@ -1,1 +1,11 @@
-No license plates found.
+plate0: 10 results
+    - WOBTI500	 confidence: 86.7748
+    - WOBTI50D	 confidence: 84.8945
+    - W0BTI500	 confidence: 84.6781
+    - WOBTIS00	 confidence: 84.3888
+    - WO8TI500	 confidence: 84.2072
+    - W0BTI50D	 confidence: 82.7978
+    - WOBTIS0D	 confidence: 82.5084
+    - WO8TI50D	 confidence: 82.3269
+    - W0BTIS00	 confidence: 82.292
+    - W08TI500	 confidence: 82.1104
